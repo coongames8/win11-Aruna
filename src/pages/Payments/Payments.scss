@@ -5,7 +5,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   background: rgba(0, 0, 0, 0.4);
 }
 
@@ -18,43 +18,51 @@
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  padding: 2rem;
+  padding: 1.5rem;
   color: white;
 }
 
 .payment-title {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
   color: white;
   position: relative;
 
   &::after {
     content: '';
     display: block;
-    width: 80px;
-    height: 3px;
+    width: 60px;
+    height: 2px;
     background: var(--neon-blue);
-    margin: 10px auto 0;
-    border-radius: 3px;
+    margin: 8px auto 0;
+    border-radius: 2px;
   }
 }
 
 .method-selector {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
   justify-content: center;
+  flex-wrap: nowrap; // Always horizontal
+  overflow-x: auto; // Allow horizontal scrolling if needed
+  padding-bottom: 0.5rem;
 
   .method-option {
-    padding: 0.8rem 1.5rem;
-    border-radius: 30px;
+    padding: 0.6rem 1rem;
+    border-radius: 25px;
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
+    justify-content: center;
+    flex-shrink: 0; // Prevent shrinking
+    min-width: 100px;
+    font-size: 0.85rem;
+    white-space: nowrap;
 
     input {
       display: none;
@@ -74,33 +82,36 @@
 
 .plan-selector {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
 
   .plan-option {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    padding: 1rem;
+    border-radius: 8px;
+    padding: 0.8rem;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 
     input {
       display: none;
     }
 
     .plan-label {
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
     }
 
     .plan-price {
       font-weight: 600;
       color: var(--neon-blue);
+      font-size: 0.85rem;
     }
 
     &:hover {
@@ -110,39 +121,39 @@
     &.active {
       background: rgba(0, 119, 255, 0.2);
       border-color: var(--neon-blue);
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0, 119, 255, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 3px 10px rgba(0, 119, 255, 0.2);
     }
   }
 }
 
 .crypto-details {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 
   h3 {
     text-align: center;
-    margin-bottom: 1.5rem;
-    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
   }
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 
     label {
       display: block;
-      margin-bottom: 0.5rem;
-      font-size: 0.9rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.8rem;
       opacity: 0.8;
     }
 
     .glass-select {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.6rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
+      border-radius: 6px;
       color: white;
-      font-size: 1rem;
+      font-size: 0.9rem;
 
       option {
         background: rgba(0, 0, 0, 0.8);
@@ -152,54 +163,60 @@
 
   .payment-info {
     background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
-    padding: 1rem;
-    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
 
     p {
-      margin: 0.5rem 0;
+      margin: 0.4rem 0;
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      font-size: 0.85rem;
 
       span {
         font-weight: 500;
         color: var(--neon-blue);
         word-break: break-all;
         text-align: right;
-        margin-left: 1rem;
+        margin-left: 0.5rem;
+        font-size: 0.8rem;
       }
     }
   }
 
   .address-copy {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
 
     .glass-input {
       flex: 1;
-      padding: 0.8rem;
+      padding: 0.6rem;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
+      border-radius: 6px;
       color: white;
-      font-size: 0.9rem;
+      font-size: 0.8rem;
     }
 
     .copy-btn {
-      width: 50px;
+      width: 40px;
       background: rgba(0, 119, 255, 0.2);
       border: 1px solid rgba(0, 119, 255, 0.3);
-      border-radius: 8px;
+      border-radius: 6px;
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       &:hover {
         background: rgba(0, 119, 255, 0.3);
       }
 
       .icon {
-        font-size: 1.2rem;
+        font-size: 1rem;
       }
     }
   }
@@ -210,55 +227,30 @@
   text-align: center;
 
   h3 {
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
   }
 
   .paystack-btn {
     width: 100%;
-    max-width: 300px;
+    max-width: 250px;
     margin: 0 auto;
-    padding: 1rem;
+    padding: 0.8rem;
     background: linear-gradient(135deg, var(--neon-blue), #0066ff);
     color: white;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 119, 255, 0.3);
+    box-shadow: 0 3px 10px rgba(0, 119, 255, 0.3);
 
     &:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 119, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 119, 255, 0.4);
     }
   }
-}
-
-@media (max-width: 768px) {
-  .payment-container {
-    padding: .5rem;
-  }
-
-  .payment-glass {
-    padding: 1rem;
-  }
-
-  .plan-selector {
-    grid-template-columns: 1fr;
-  }
-
-  .method-selector {
-    flex-direction: column;
-    align-items: stretch;
-
-    .method-option {
-      text-align: center;
-    }
-  }
-
-  // Add to your existing Payments.scss file
 }
 
 .paypal-payment {
@@ -266,18 +258,17 @@
   text-align: center;
 
   h3 {
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
     color: white;
   }
 
   .paypal-buttons-container {
-    max-width: 400px;
+    max-width: 350px;
     margin: 0 auto;
     
-    // Custom styling for PayPal buttons to match your theme
     :global(.paypal-buttons) {
-      border-radius: 10px;
+      border-radius: 8px;
       overflow: hidden;
     }
   }
@@ -287,41 +278,157 @@
 .payment-glass {
   .paypal-buttons-container {
     iframe {
-      min-height: 45px !important;
+      min-height: 40px !important;
     }
   }
 }
 
-// Make sure the method selector can handle 3 items
-.method-selector {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  .method-option {
-    flex: 1;
-    min-width: 120px;
-    max-width: 150px;
-    // ... rest of your existing styles
-  }
-}
-
+// Mobile Responsive Design
 @media (max-width: 768px) {
+  .payment-container {
+    padding: 0.5rem;
+    justify-content: flex-start;
+    min-height: calc(100vh - 2rem);
+  }
+
+  .payment-glass {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .payment-title {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    
+    &::after {
+      width: 50px;
+      height: 2px;
+      margin: 6px auto 0;
+    }
+  }
+
   .method-selector {
     margin-bottom: 1rem;
+    gap: 0.4rem;
+    
+    .method-option {
+      padding: 0.5rem 0.8rem;
+      min-width: 90px;
+      font-size: 0.8rem;
+      border-radius: 20px;
+    }
+  }
+
+  .plan-selector {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+
+    .plan-option {
+      padding: 0.6rem;
+      border-radius: 6px;
+
+      .plan-label {
+        font-size: 0.75rem;
+      }
+
+      .plan-price {
+        font-size: 0.8rem;
+      }
+
+      &.active {
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  .crypto-details,
+  .mpesa-payment,
+  .paypal-payment {
+    margin-top: 1rem;
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+    }
+  }
+
+  .paystack-btn {
+    max-width: 200px !important;
+    padding: 0.7rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  .paypal-buttons-container {
+    max-width: 300px !important;
+  }
+}
+
+// Extra small screens
+@media (max-width: 480px) {
+  .payment-container {
+    padding: 0.25rem;
+  }
+
+  .payment-glass {
+    padding: 0.8rem;
+  }
+
+  .payment-title {
+    font-size: 1.2rem;
+  }
+
+  .method-selector {
     .method-option {
       min-width: 80px;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  .plan-selector {
+    grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 0.5rem;
+
+    .plan-option {
+      padding: 0.5rem;
+
+      .plan-label {
+        font-size: 0.7rem;
+      }
+
+      .plan-price {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .crypto-details {
+    .payment-info p {
+      font-size: 0.8rem;
+      
+      span {
+        font-size: 0.75rem;
+      }
+    }
+    
+    .glass-input {
+      font-size: 0.75rem !important;
     }
   }
 }
 
-  @media (max-width: 768px) {
+// Very small screens (Galaxy Fold, etc.)
+@media (max-width: 360px) {
   .method-selector {
-    margin-bottom: 1rem;
     .method-option {
-      min-width: 80px;
+      min-width: 70px;
+      font-size: 0.7rem;
+      padding: 0.35rem 0.5rem;
     }
+  }
+
+  .plan-selector {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
