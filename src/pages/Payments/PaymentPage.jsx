@@ -31,7 +31,7 @@ function PaymentContent({ setUserData }) {
   const [payCurrency, setPayCurrency] = useState("");
   const [address, setAddress] = useState("");
   const [network, setNetwork] = useState("");
-  const [paypalKey, setPaypalKey] = useState(0); // Add key to force re-render
+  const [paypalKey, setPaypalKey] = useState(0);
 
   // Payment methods - Added PayPal
   const paymentMethods = [
@@ -59,6 +59,13 @@ function PaymentContent({ setUserData }) {
       { id: "50", value: 50, label: "Yearly", price: "$50" },
     ],
   };
+
+  // Initialize price based on payment type
+  useEffect(() => {
+    // When payment type changes, set the default price for that payment method
+    const defaultPlan = subscriptionPlans[paymentType][0];
+    setPrice(defaultPlan.value);
+  }, [paymentType]); // Only run when paymentType changes
 
   const getSubscriptionPeriod = () => {
     if (paymentType === "mpesa") {
@@ -95,14 +102,19 @@ function PaymentContent({ setUserData }) {
     }
   };
 
-  // PayPal order creation - FIXED: Use current price value
+  // Handle payment method change
+  const handlePaymentMethodChange = (methodId) => {
+    setPaymentType(methodId);
+    // Price will be automatically set by the useEffect above
+  };
+
+  // PayPal order creation
   const createPayPalOrder = (data, actions) => {
-    const currentPrice = price; // Capture current price value
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: currentPrice.toString(),
+            value: price.toString(),
             currency_code: "USD",
           },
           description: `${getSubscriptionPeriod()} VIP Subscription`,
@@ -114,9 +126,8 @@ function PaymentContent({ setUserData }) {
   // PayPal approval handler
   const onPayPalApprove = (data, actions) => {
     return actions.order.capture().then(function (details) {
-      // Handle successful PayPal payment
       console.log("PayPal payment completed:", details);
-      handleUpgrade(); // Upgrade user after successful payment
+      handleUpgrade();
     });
   };
 
@@ -175,10 +186,10 @@ function PaymentContent({ setUserData }) {
     if (paymentType === "crypto") getCryptoAddress();
   }, [selectedCurrency, price, paymentType]);
 
-  // FIX: Force PayPal buttons to re-render when price changes
+  // Force PayPal buttons to re-render when price changes
   useEffect(() => {
     if (paymentType === "paypal") {
-      setPaypalKey(prev => prev + 1); // Change key to force re-render
+      setPaypalKey(prev => prev + 1);
     }
   }, [price, paymentType]);
 
@@ -202,7 +213,7 @@ function PaymentContent({ setUserData }) {
                 name="payment-method"
                 value={method.id}
                 checked={paymentType === method.id}
-                onChange={() => setPaymentType(method.id)}
+                onChange={() => handlePaymentMethodChange(method.id)}
               />
               {method.label}
             </label>
@@ -292,9 +303,8 @@ function PaymentContent({ setUserData }) {
               GET {getSubscriptionPeriod().toUpperCase()} VIP FOR ${price}
             </h3>
             <div className="paypal-buttons-container">
-              {/* FIX: Add key to force re-render when price changes */}
               <PayPalButtons
-                key={paypalKey} // This forces re-render when key changes
+                key={paypalKey}
                 style={{ 
                   layout: "horizontal",
                   color: "gold",
@@ -304,10 +314,9 @@ function PaymentContent({ setUserData }) {
                 createOrder={createPayPalOrder}
                 onApprove={onPayPalApprove}
                 onError={onPayPalError}
-                forceReRender={[price]} // Additional safety to force re-render
+                forceReRender={[price]}
               />
             </div>
-            {/* Show current amount for debugging */}
             <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px', opacity: 0.8 }}>
               Paying: ${price} for {getSubscriptionPeriod()} VIP
             </p>
