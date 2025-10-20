@@ -14,7 +14,7 @@ const npApi = new NowPaymentsApi({ apiKey: "D7YT1YV-PCAM4ZN-HX9W5M1-H02KFCV" });
 
 // PayPal configuration
 const paypalInitialOptions = {
-  "client-id": "ATpK65g9eu6gxJMBzHf-Dm3JAQ6xtH0AN7ISXgcW_TJEjUoxaUa_5lvGr9kABqFcDRFNmjb3WpFTc4h0",
+  "client-id": "AXIggvGGvXozbZhdkvizPLd89nVYW8KoyNlHO0gHx7hjY_Ah_IfgXihUQGf7T2HUUVYx-D5SNncM0CtU",
   currency: "USD",
   intent: "capture",
 };
