@@ -206,7 +206,7 @@
 }
 
 .mpesa-payment {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   text-align: center;
 
   h3 {
@@ -238,11 +238,11 @@
 
 @media (max-width: 768px) {
   .payment-container {
-    padding: 1rem;
+    padding: .5rem;
   }
 
   .payment-glass {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .plan-selector {
@@ -259,9 +259,10 @@
   }
 
   // Add to your existing Payments.scss file
+}
 
 .paypal-payment {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   text-align: center;
 
   h3 {
@@ -309,9 +310,18 @@
 
 @media (max-width: 768px) {
   .method-selector {
+    margin-bottom: 1rem;
     .method-option {
-      min-width: 100px;
+      min-width: 80px;
     }
   }
 }
+
+  @media (max-width: 768px) {
+  .method-selector {
+    margin-bottom: 1rem;
+    .method-option {
+      min-width: 80px;
+    }
+  }
 }
