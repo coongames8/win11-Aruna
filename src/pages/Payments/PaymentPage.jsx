@@ -14,7 +14,7 @@ const npApi = new NowPaymentsApi({ apiKey: "D7YT1YV-PCAM4ZN-HX9W5M1-H02KFCV" });
 
 // PayPal configuration
 const paypalInitialOptions = {
-  "client-id": "ATpK65g9eu6gxJMBzHf-Dm3JAQ6xtH0AN7ISXgcW_TJEjUoxaUa_5lvGr9kABqFcDRFNmjb3WpFTc4h0", //AXIggvGGvXozbZhdkvizPLd89nVYW8KoyNlHO0gHx7hjY_Ah_IfgXihUQGf7T2HUUVYx-D5SNncM0CtU// Replace with your actual PayPal Client ID
+  "client-id": "ATpK65g9eu6gxJMBzHf-Dm3JAQ6xtH0AN7ISXgcW_TJEjUoxaUa_5lvGr9kABqFcDRFNmjb3WpFTc4h0",
   currency: "USD",
   intent: "capture",
 };
@@ -31,6 +31,7 @@ function PaymentContent({ setUserData }) {
   const [payCurrency, setPayCurrency] = useState("");
   const [address, setAddress] = useState("");
   const [network, setNetwork] = useState("");
+  const [paypalKey, setPaypalKey] = useState(0); // Add key to force re-render
 
   // Payment methods - Added PayPal
   const paymentMethods = [
@@ -94,13 +95,14 @@ function PaymentContent({ setUserData }) {
     }
   };
 
-  // PayPal order creation
+  // PayPal order creation - FIXED: Use current price value
   const createPayPalOrder = (data, actions) => {
+    const currentPrice = price; // Capture current price value
     return actions.order.create({
       purchase_units: [
         {
           amount: {
-            value: price.toString(),
+            value: currentPrice.toString(),
             currency_code: "USD",
           },
           description: `${getSubscriptionPeriod()} VIP Subscription`,
@@ -172,6 +174,13 @@ function PaymentContent({ setUserData }) {
     fetchCurrencies();
     if (paymentType === "crypto") getCryptoAddress();
   }, [selectedCurrency, price, paymentType]);
+
+  // FIX: Force PayPal buttons to re-render when price changes
+  useEffect(() => {
+    if (paymentType === "paypal") {
+      setPaypalKey(prev => prev + 1); // Change key to force re-render
+    }
+  }, [price, paymentType]);
 
   return (
     <div className="payment-container">
@@ -283,7 +292,9 @@ function PaymentContent({ setUserData }) {
               GET {getSubscriptionPeriod().toUpperCase()} VIP FOR ${price}
             </h3>
             <div className="paypal-buttons-container">
+              {/* FIX: Add key to force re-render when price changes */}
               <PayPalButtons
+                key={paypalKey} // This forces re-render when key changes
                 style={{ 
                   layout: "vertical",
                   color: "blue",
@@ -293,8 +304,13 @@ function PaymentContent({ setUserData }) {
                 createOrder={createPayPalOrder}
                 onApprove={onPayPalApprove}
                 onError={onPayPalError}
+                forceReRender={[price]} // Additional safety to force re-render
               />
             </div>
+            {/* Show current amount for debugging */}
+            <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px', opacity: 0.8 }}>
+              Paying: ${price} for {getSubscriptionPeriod()} VIP
+            </p>
           </div>
         )}
       </div>
