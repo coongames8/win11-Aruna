@@ -19,7 +19,7 @@ const paypalInitialOptions = {
   intent: "capture",
 };
 
-function PaymentContent({ setUserData }) {
+export default function PaymentPage({ setUserData }) {
   const { price, setPrice } = useContext(PriceContext);
   const { currentUser } = useContext(AuthContext);
   const [paymentType, setPaymentType] = useState("mpesa");
@@ -194,6 +194,7 @@ function PaymentContent({ setUserData }) {
   }, [price, paymentType]);
 
   return (
+    <PayPalScriptProvider options={paypalInitialOptions}>
     <div className="payment-container">
       <AppHelmet title="Payment" location="/pay" />
 
@@ -305,7 +306,7 @@ function PaymentContent({ setUserData }) {
             <div className="paypal-buttons-container">
               <PayPalButtons
                 key={paypalKey}
-                style={{ 
+                style={{
                   layout: "horizontal",
                   color: "gold",
                   shape: "pill",
@@ -323,15 +324,6 @@ function PaymentContent({ setUserData }) {
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-// Main export wrapped with PayPal provider
-export default function PaymentPage({ setUserData }) {
-  return (
-    <PayPalScriptProvider options={paypalInitialOptions}>
-      <PaymentContent setUserData={setUserData} />
-    </PayPalScriptProvider>
+    </div></PayPalScriptProvider>
   );
 }
