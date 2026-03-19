@@ -21,7 +21,7 @@ const paypalInitialOptions = {
 
 // PayHero configuration
 const PAYHERO_API_BASE = 'https://backend.payhero.co.ke/api/v2';
-const PAYHERO_AUTH_TOKEN = 'Basic cmxZdTh4dGtTUG1EZVZTa1JXZDQ6UndETHdMcmd4Z3lVRmtKYXlzS09UNjNYS1Bvemh0T0xXZ09IOGgwOA==';
+const PAYHERO_AUTH_TOKEN = 'Basic bnhvR1cxSVZqMFVoVVNHMmtTc3A6czFmcFF0NFRJa0lreFowYXZVWjdkRDRkdHJKeUtRaUxldjdoVVZVTw==';//'cmxZdTh4dGtTUG1EZVZTa1JXZDQ6UndETHdMcmd4Z3lVRmtKYXlzS09UNjNYS1Bvemh0T0xXZ09IOGgwOA==';
 const CHANNEL_ID = 3123; // Your channel ID
 
 // Fixed exchange rate (approximate KSH to USD)
