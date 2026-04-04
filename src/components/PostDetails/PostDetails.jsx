@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import './PostDetails.scss';
-import Profile from '../../assets/vip.jpg';
-import Logo from '../../assets/logo.png';
-import { Close, ErrorTwoTone, Verified } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
-import { PriceContext } from '../../PriceContext';
-import { AuthContext } from '../../AuthContext';
+import React, { useContext, useEffect, useState } from "react";
+import "./PostDetails.scss";
+import Profile from "../../assets/vip.jpg";
+import Logo from "../../assets/logo.png";
+import { Close, ErrorTwoTone, Verified } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { PriceContext } from "../../PriceContext";
+import { AuthContext } from "../../AuthContext";
 
 export default function PostDetail({ data, userData }) {
   const { setPrice } = useContext(PriceContext);
@@ -16,11 +16,14 @@ export default function PostDetail({ data, userData }) {
 
   const handleClick = () => {
     document.querySelector(".post-detail").classList.remove("active");
-  }
+  };
 
   useEffect(() => {
     if (currentUser !== null) {
-      if (currentUser.email === 'kkibetkkoir@gmail.com' || currentUser.email === 'arovanzgamez@gmail.com') {
+      if (
+        currentUser.email === "kkibetkkoir@gmail.com" ||
+        currentUser.email === "arovanzgamez@gmail.com"
+      ) {
         setIsAdmin(true);
         setIsPremium(true);
       } else {
@@ -32,12 +35,12 @@ export default function PostDetail({ data, userData }) {
 
   function formatDate() {
     const date = new Date();
-    return date.toLocaleDateString('en-US');
+    return date.toLocaleDateString("en-US");
   }
 
   return (
     <div className={`post-detail glass-panel ${x.matches && "active"}`}>
-      <Close className='close-icon' onClick={handleClick} />
+      <Close className="close-icon" onClick={handleClick} />
 
       <div className="detail-header">
         <div className="avatar-container">
@@ -60,12 +63,12 @@ export default function PostDetail({ data, userData }) {
       <div className="match-details">
         <div className="team-row">
           <span className="team-name">
-            {(data.premium && !isPremium && data.date === formatDate())
+            {data.premium && !isPremium && data.date === formatDate()
               ? "Join VIP To View"
               : data.home}
           </span>
           <span className="team-score">
-            {data.results ? data.results.split('-')[0] : "?"}
+            {data.results ? data.results.split("-")[0] : "?"}
           </span>
         </div>
 
@@ -73,12 +76,12 @@ export default function PostDetail({ data, userData }) {
 
         <div className="team-row">
           <span className="team-name">
-            {(data.premium && !isPremium && data.date === formatDate())
+            {data.premium && !isPremium && data.date === formatDate()
               ? "Join VIP To View"
               : data.away}
           </span>
           <span className="team-score">
-            {data.results ? data.results.split('-')[1] : "?"}
+            {data.results ? data.results.split("-")[1] : "?"}
           </span>
         </div>
       </div>
@@ -91,26 +94,22 @@ export default function PostDetail({ data, userData }) {
       </div>
 
       <div className="action-buttons">
-        {(data.premium && !isPremium) && (
+        {data.premium && !isPremium && (
           <Link
-            to={'/pay'}
-            className='glass-btn premium-btn'
-            onClick={() => setPrice(700)}
+            to={"/pay"}
+            className="glass-btn premium-btn"
+            onClick={() => setPrice(850)}
           >
             GET VIP ACCESS
           </Link>
         )}
 
         {isAdmin && (
-          <Link
-            to={'/edit'}
-            className='glass-btn edit-btn'
-            state={data}
-          >
+          <Link to={"/edit"} className="glass-btn edit-btn" state={data}>
             EDIT PREDICTION
           </Link>
         )}
       </div>
     </div>
-  )
+  );
 }
