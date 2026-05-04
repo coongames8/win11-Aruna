@@ -2,7 +2,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import { AuthContext } from "../../../AuthContext";
 import { PriceContext } from "../../../PriceContext";
 import {
-  SUBSCRIPTION_PLANS,
+  SUBSCRIPTION_PLANS, 
   getSubscriptionPeriod,
   getPlanName,
   handleUpgrade,

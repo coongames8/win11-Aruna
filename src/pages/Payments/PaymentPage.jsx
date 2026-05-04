@@ -17,7 +17,7 @@ export default function PaymentPage({ setUserData }) {
 
   // Payment methods
   const paymentMethods = [
-    { id: "mpesa", label: "Mobile/Card 📲" },
+    { id: "mpesa", label: "Mobile 📲" },
     {
       id: "paypal",
       label: "PayPal",
@@ -26,7 +26,7 @@ export default function PaymentPage({ setUserData }) {
     /*{
       id: "googlepay",
       label: "Google Pay",
-      icon: <FontAwesomeIcon icon={faGooglePay} />,
+      icon: <div className="icons8-google"></div>,//<FontAwesomeIcon icon={faGooglePay} />,
     },*/
     {
       id: "crypto",
@@ -84,7 +84,7 @@ export default function PaymentPage({ setUserData }) {
                   method.id === "googlepay" ? "google-pay-label" : ""
                 }`}
               >
-                {method.id === "googlepay" ? "" : method.label}
+                {/*method.id === "googlepay" ? "" : */method.label}
               </span>
             </label>
           ))}

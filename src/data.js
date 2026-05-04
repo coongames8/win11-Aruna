@@ -54,7 +54,7 @@ export const faqs = [
 export const socialLinks = {
     telegramChannel: "https://t.me/win11_ke",
     whatsappChannel: "https://whatsapp.com/channel/0029VbBG7n2FCCoXiyEFGJ0U",
-    facebookPage: "https://www.facebook.com/share/16dqHtqVM4/",
+    facebookPage: "https://www.facebook.com/share/61566671650616/",
     xPage: "https://www.x.com/@win11_ke",
     instagramPage: "https://www.instagram.com/win11_ke/",
     affliateLink: "https://spin-to-win.win11.com/",

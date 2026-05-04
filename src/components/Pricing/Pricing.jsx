@@ -8,7 +8,7 @@ export default function Pricing() {
   const navigate = useNavigate();
   const { setPrice } = useContext(PriceContext);
 
-  const [billing, setBilling] = useState("Silver");
+  const [billing, setBilling] = useState("Gold");
 
   const handleClick = (price) => {
     setPrice(price);

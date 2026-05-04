@@ -22,7 +22,7 @@
     "@mui/icons-material": "^6.1.5",
     "@mui/material": "^6.1.5",
     "@nowpaymentsio/nowpayments-api-js": "^1.0.5",
-    "@paypal/react-paypal-js": "^8.7.0",
+    "@paypal/react-paypal-js": "^9.1.0",
     "@paystack/inline-js": "^2.22.1",
     "firebase": "^11.0.1",
     "kora-checkout": "^1.0.4",
