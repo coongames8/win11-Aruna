@@ -3,13 +3,13 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, updateDoc, where, orderBy, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAG3wa_geMw6Is-lUKdKDeIXFGExRykhQA",
-  authDomain: "win11-86562.firebaseapp.com",
-  projectId: "win11-86562",
-  storageBucket: "win11-86562.firebasestorage.app",
-  messagingSenderId: "132820841590",
-  appId: "1:132820841590:web:e9cbb5017f77ef7fb8db57",
-  measurementId: "G-SXJBDD3322"
+  apiKey: "AIzaSyBqHfrwEOoYkTJzi4XQsFfh4M3xjg8e6bs",
+  authDomain: "goalytics-5c239.firebaseapp.com",
+  projectId: "goalytics-5c239",
+  storageBucket: "goalytics-5c239.firebasestorage.app",
+  messagingSenderId: "260589878215",
+  appId: "1:260589878215:web:5a0c0fdf9dab435d4fb7e2",
+  measurementId: "G-KK0F3K4954"
 };
 
 const app = initializeApp(firebaseConfig);
