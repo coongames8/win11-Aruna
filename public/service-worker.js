@@ -1,4 +1,4 @@
-const CACHE_NAME = 'win11-cache';
+const CACHE_NAME = 'Goalkings-cache';
 const urlsToCache = [
     '/',
     '/index.html',

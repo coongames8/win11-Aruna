@@ -1,7 +1,7 @@
 {
-  "short_name": "Win11",
-  "name": "Win11",
-  "homepage": "https://win11.onrender.com",
+  "short_name": "Goalkings",
+  "name": "Goalkings",
+  "homepage": "https://goalkings.live",
   "version": "0.1.0",
   "description": "Get all the latest ✓Football Predictions, ✓Latest Football Betting Odds and livescores, results & fixtures for all leagues and competitions, including the Premier League, Championship and across the world.",
   "icons": [
@@ -106,12 +106,12 @@
     "type": "classic"
   },
   "developer": {
-    "name": "win11",
-    "url": "https://win11.onrender.com"
+    "name": "Goalkings",
+    "url": "https://goalkings.live"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kkibe/win11"
+    "url": "https://github.com/kkibe/Goalkings"
   },
   "license": "ISC/MIT",
   "keywords": [

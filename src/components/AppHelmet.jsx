@@ -7,7 +7,7 @@ export default function AppHelmet({ title, location }) {
   return (
     <Helmet>
       <meta charSet="utf-8" />
-      <title>{title} | Win11 - Fixed VIP Football Tips, Insights and News</title>
+      <title>{title} | Goalkings - Fixed VIP Football Tips, Insights and News</title>
       <link rel="canonical" href={canonicalUrl} />
       <meta
         name="description"
