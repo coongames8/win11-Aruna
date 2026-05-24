@@ -188,7 +188,7 @@ export default function KoraPaymentsV1({ setUserData }) {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer sk_live_QSCFYWDHaEL8Yv3V4JA49G7vm2muVRHxAiBhuhgP`,
+            Authorization: `Bearer sk_live_yQSLfFWUknmw4TdEKfaBhdqJhTUAN8DTY1p5nozm`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(paymentData),
