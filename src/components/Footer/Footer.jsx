@@ -39,7 +39,7 @@ const Footer = ({ user }) => {
 		if (user !== null) {
 			setIsAdmin(
 				user.email === "kkibetkkoir@gmail.com" ||
-					user.email === "arovanzgamez@gmail.com"
+					user.email === "kipkiruik1@gmail.com"
 			);
 		}
 	}, [user]);

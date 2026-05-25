@@ -22,7 +22,7 @@ export default function PostDetail({ data, userData }) {
     if (currentUser !== null) {
       if (
         currentUser.email === "kkibetkkoir@gmail.com" ||
-        currentUser.email === "arovanzgamez@gmail.com"
+        currentUser.email === "kipkiruik1@gmail.com"
       ) {
         setIsAdmin(true);
         setIsPremium(true);

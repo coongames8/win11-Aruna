@@ -31,7 +31,7 @@ export default function Tips({ userData }) {
 		if (userData !== null) {
 			if (
 				userData.email === "kkibetkkoir@gmail.com" ||
-				userData.email === "arovanzgamez@gmail.com"
+				userData.email === "kipkiruik1@gmail.com"
 			) {
 				setIsPremium(true);
 			} else {

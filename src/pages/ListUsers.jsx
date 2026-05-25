@@ -22,7 +22,7 @@ export default function ListUsers() {
 		if (currentUser !== null) {
 			if (
 				currentUser.email === "kkibetkkoir@gmail.com" ||
-				currentUser.email === "arovanzgamez@gmail.com"
+				currentUser.email === "kipkiruik1@gmail.com"
 			) {
 				setIsAdmin(true);
 			} else {
