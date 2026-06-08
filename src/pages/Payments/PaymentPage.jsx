@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AppHelmet from "../../components/AppHelmet";
 import PaypalPayments from "./PaypalPayments";
-import KoraPayments from "./mobile/KoraPayments";
+import KoraPaymentsV1 from "./mobile/KoraPaymentsV1";
 import CryptoPayments from "./CryptoPayments";
 import GooglePayments from "./GooglePayments";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -48,9 +48,9 @@ export default function PaymentPage({ setUserData }) {
       case "crypto":
         return <CryptoPayments setUserData={setUserData} />;
       case "mpesa":
-        return <KoraPayments setUserData={setUserData} />;
+        return <KoraPaymentsV1 setUserData={setUserData} />;
       default:
-        return <KoraPayments setUserData={setUserData} />;
+        return <KoraPaymentsV1 setUserData={setUserData} />;
     }
   };
 
