@@ -9,6 +9,7 @@ import {
 } from "../paymentUtils";
 import Swal from "sweetalert2";
 import "../Payments.scss";
+import { useCurrency } from "../../../hooks/useCurrency";
 
 export default function KoraPaymentsV1({ setUserData }) {
   const { price, setPrice } = useContext(PriceContext);
@@ -23,6 +24,9 @@ export default function KoraPaymentsV1({ setUserData }) {
   });
   const [isLoadingRate, setIsLoadingRate] = useState(false);
   const [showCountrySelector, setShowCountrySelector] = useState(false);
+  
+  // Use the currency detection hook
+  const { currency, loading: currencyLoading } = useCurrency();
 
   const countries = {
     Nigeria: { code: "NG", currency: "NGN", flag: "🇳🇬", rate: 10.63 },
@@ -44,12 +48,24 @@ export default function KoraPaymentsV1({ setUserData }) {
     { id: "yearly", value: 8500, label: "1 Year VIP", period: "Yearly" },
   ];
 
-  // Convert prices for Nigeria only
-  const convertToNaira = () => {
+  // Auto-detect country from currency hook
+  useEffect(() => {
+    if (!currencyLoading && currency) {
+      // Check if detected country is Nigeria
+      if (currency.country === 'Nigeria' || currency.country_code === 'NG') {
+        setSelectedCountry("Nigeria");
+      } else {
+        setSelectedCountry("Kenya");
+      }
+    }
+  }, [currency, currencyLoading]);
+
+  // Convert prices based on selected country
+  const convertPrices = () => {
     setIsLoadingRate(true);
     try {
-      const rate = countries.Nigeria.rate;
-
+      const rate = countries[selectedCountry]?.rate || 1;
+      
       setConvertedPrices({
         daily: Math.round(priceOptions.Daily * rate),
         weekly: Math.round(priceOptions.Weekly * rate),
@@ -57,8 +73,8 @@ export default function KoraPaymentsV1({ setUserData }) {
         yearly: Math.round(priceOptions.Yearly * rate),
       });
     } catch (error) {
-      console.error("Error converting to Naira:", error);
-      const fallbackRate = 10.63;
+      console.error("Error converting prices:", error);
+      const fallbackRate = selectedCountry === "Nigeria" ? 10.63 : 1;
       setConvertedPrices({
         daily: Math.round(priceOptions.Daily * fallbackRate),
         weekly: Math.round(priceOptions.Weekly * fallbackRate),
@@ -70,23 +86,9 @@ export default function KoraPaymentsV1({ setUserData }) {
     }
   };
 
-  // Reset to KES prices
-  const resetToKesPrices = () => {
-    setConvertedPrices({
-      daily: priceOptions.Daily,
-      weekly: priceOptions.Weekly,
-      monthly: priceOptions.Monthly,
-      yearly: priceOptions.Yearly,
-    });
-  };
-
   // Update prices when country changes
   useEffect(() => {
-    if (selectedCountry === "Nigeria") {
-      convertToNaira();
-    } else {
-      resetToKesPrices();
-    }
+    convertPrices();
   }, [selectedCountry]);
 
   const getCurrentConvertedPrice = () => {
@@ -169,7 +171,7 @@ export default function KoraPaymentsV1({ setUserData }) {
 
       const paymentData = {
         amount: amountToPay,
-        redirect_url: `${currentUrl}?reference=`,
+        redirect_url: `${currentUrl}?reference=${reference}`,
         currency: countryConfig.currency,
         reference: reference,
         narration: `${getPlanName(price)} VIP Subscription`,
@@ -180,6 +182,8 @@ export default function KoraPaymentsV1({ setUserData }) {
         metadata: {
           plan: getPlanName(price),
           user_id: currentUser.email,
+          detected_country: currency?.country,
+          detected_currency: currency?.currency,
         },
       };
 
@@ -218,8 +222,33 @@ export default function KoraPaymentsV1({ setUserData }) {
     setPrice(planValue);
   };
 
+  // Show loading while detecting currency
+  if (currencyLoading) {
+    return (
+      <div className="kora-payment-wrapper">
+        <div style={{ textAlign: "center", padding: "40px", color: "#fff" }}>
+          Detecting your location...
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="kora-payment-wrapper">
+      {/* Show detected country info */}
+      {currency && currency.country !== "Kenya" && (
+        <div style={{ 
+          textAlign: "center", 
+          padding: "8px", 
+          marginBottom: "15px",
+          fontSize: "12px",
+          background: "rgba(255,255,255,0.1)",
+          borderRadius: "5px"
+        }}>
+          🔍 Detected: {currency.country} - Showing prices in {currency.currency_name}
+        </div>
+      )}
+
       <div className="country-selector">
         <div
           className="selected-country"
@@ -257,7 +286,7 @@ export default function KoraPaymentsV1({ setUserData }) {
       <div className="plan-selector">
         {subscriptionPlans.map((plan) => {
           const convertedPrice = convertedPrices[plan.id] || plan.value;
-          const currency = getCurrencySymbol();
+          const currencySymbol = getCurrencySymbol();
 
           return (
             <label
@@ -275,7 +304,7 @@ export default function KoraPaymentsV1({ setUserData }) {
               <span className="plan-price">
                 {isLoadingRate
                   ? "Loading..."
-                  : `${currency} ${Math.round(convertedPrice)}`}
+                  : `${currencySymbol} ${Math.round(convertedPrice).toLocaleString()}`}
               </span>
             </label>
           );
@@ -289,7 +318,7 @@ export default function KoraPaymentsV1({ setUserData }) {
             ? "Loading..."
             : `${getCurrencySymbol()} ${Math.round(
                 getCurrentConvertedPrice()
-              )}`}
+              ).toLocaleString()}`}
         </h3>
 
         <button
