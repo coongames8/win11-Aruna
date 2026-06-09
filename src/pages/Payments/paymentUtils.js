@@ -1,6 +1,7 @@
 import { doc, setDoc } from "firebase/firestore";
 import { db, getUser } from "../../firebase";
 import Swal from "sweetalert2";
+import { detectUserCountry, convertCurrency, formatCurrency } from "../../hooks/useCurrency";
 
 // Subscription plans mapping for different payment methods
 export const SUBSCRIPTION_PLANS = {
@@ -64,6 +65,59 @@ export const getPlanName = (price) => {
   if (price === 3000 || price === 23) return "Monthly";
   if (price === 8500 || price === 65) return "Yearly";
   return "Weekly";
+};
+
+// NEW: Get user's currency information
+export const getUserCurrency = async () => {
+  try {
+    const currencyInfo = await detectUserCountry();
+    return currencyInfo;
+  } catch (error) {
+    console.error("Error getting user currency:", error);
+    return {
+      country: 'Kenya',
+      country_code: 'KE',
+      currency: 'KES',
+      currency_symbol: 'KSh',
+      currency_name: 'Kenyan Shilling',
+      phone_prefix: '+254',
+      flag: '🇰🇪',
+      exchange_rate: 1,
+    };
+  }
+};
+
+// NEW: Convert price from KES to user's currency
+export const convertPriceToUserCurrency = (priceInKES, userCurrency) => {
+  if (!userCurrency || userCurrency === 'KES') {
+    return priceInKES;
+  }
+  return convertCurrency(priceInKES, userCurrency);
+};
+
+// NEW: Format price with user's currency symbol
+export const formatPriceForUser = (priceInKES, currencyInfo) => {
+  if (!currencyInfo) {
+    return `KSH ${priceInKES}`;
+  }
+  const convertedAmount = convertCurrency(priceInKES, currencyInfo.currency);
+  return formatCurrency(convertedAmount, currencyInfo.currency, currencyInfo.currency_symbol);
+};
+
+// NEW: Get currency symbol for display
+export const getCurrencySymbolForCode = (currencyCode) => {
+  const symbols = {
+    KES: 'KSH',
+    NGN: '₦',
+    USD: '$',
+    GBP: '£',
+    EUR: '€',
+    ZAR: 'R',
+    GHS: '₵',
+    UGX: 'USh',
+    TZS: 'TSh',
+  };
+  return symbols[currencyCode] || currencyCode;
 };
 
 // Handle user upgrade after successful payment
