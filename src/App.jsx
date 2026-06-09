@@ -31,6 +31,7 @@ function App() {
     if (loading) {
       if (window.document.readyState === "complete") {
         setLoading(!loading)
+        
       } else {
         setLoading(false);
       }

@@ -3,22 +3,21 @@ import "./Pricing.scss";
 import { PriceContext } from "../../PriceContext";
 import { useNavigate } from "react-router-dom";
 import { Star } from "@mui/icons-material";
+import { useCurrency, convertCurrency } from "../../hooks/useCurrency";
 
 export default function Pricing() {
   const navigate = useNavigate();
   const { setPrice } = useContext(PriceContext);
-
   const [billing, setBilling] = useState("Gold");
+  
+  // Use the custom hook
+  const { currency, loading, formatAmount } = useCurrency();
 
-  const handleClick = (price) => {
-    setPrice(price);
-    navigate("/pay");
-  };
   const plans = [
     {
       id: 1,
       title: "Silver",
-      price: 250,
+      priceKES: 250,
       duration: "/Day",
       features: [
         "Every day is game day! Check out our daily tips and win big!",
@@ -29,7 +28,7 @@ export default function Pricing() {
     {
       id: 2,
       title: "Gold",
-      price: 850,
+      priceKES: 850,
       duration: "/Week",
       features: [
         "Get the scoop on this week's matches",
@@ -40,7 +39,7 @@ export default function Pricing() {
     {
       id: 3,
       title: "Platinum",
-      price: 3000,
+      priceKES: 3000,
       duration: "/Month",
       features: [
         "Plan ahead with our monthly predictions",
@@ -50,11 +49,26 @@ export default function Pricing() {
     },
   ];
 
+  const handleClick = (priceKES) => {
+    const convertedAmount = currency 
+      ? convertCurrency(priceKES, currency.currency) 
+      : priceKES;
+    
+    setPrice({
+      amountKES: priceKES,
+      amountUserCurrency: convertedAmount,
+      currency: currency?.currency || "KES",
+      currencySymbol: currency?.currency_symbol || "KSh",
+      plan: billing
+    });
+    navigate("/pay");
+  };
+
   const Item = ({ data }) => {
     return (
       <div
         className={`pricing-card ${data.title === "Gold" ? "featured" : ""}`}
-        key={data.duration}
+        key={data.id}
       >
         {data.title === "Gold" && (
           <div className="featured-badge">
@@ -64,12 +78,23 @@ export default function Pricing() {
         )}
 
         <div className="card-header">
-          <h3 className="title">{data.title}</h3>
+          <h3 className="title">
+            {data.title} {!loading && currency?.flag && <span>{currency.flag}</span>}
+          </h3>
           <div className="price">
-            <span className="currency">KSH</span>
-            <span className="amount">{data.price}</span>
+            <span className="currency">
+              {loading ? "KSH" : (currency?.currency || "KSH")}
+            </span>
+            <span className="amount">
+              {loading ? data.priceKES : formatAmount(data.priceKES)}
+            </span>
             <span className="duration">{data.duration}</span>
           </div>
+          {!loading && currency?.currency !== "KES" && (
+            <div style={{ fontSize: "12px", marginTop: "5px", opacity: 0.7 }}>
+              ≈ KSH {data.priceKES.toLocaleString()}
+            </div>
+          )}
         </div>
 
         <div className="card-features">
@@ -83,8 +108,12 @@ export default function Pricing() {
           </ul>
         </div>
 
-        <button className="glass-btn" onClick={() => handleClick(data.price)}>
-          Get Started Now
+        <button 
+          className="glass-btn" 
+          onClick={() => handleClick(data.priceKES)}
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Get Started Now"}
         </button>
       </div>
     );
