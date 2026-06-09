@@ -158,7 +158,7 @@ $blur-light: blur(8px);
 .country-selector {
   margin-bottom: 20px;
   position: relative;
-  visibility: none;
+  display: none;
 
   .selected-country {
     display: flex;
